@@ -87,9 +87,42 @@ class ForgetpPasswordBox(ScaleBox):
 
 
 class SignInBox(ScaleBox):
-    pass
+
+    def validate_account(self):
+        if self.ids.email_field.text != "" and self.ids.pass_field.ids.pwd_text_field.text != "":
+            app = MDApp.get_running_app()
+            user = None
+            try:
+                conn = app.local_sqlite.connect_database()
+                user = app.local_sqlite.search_from_database(
+                    "Users", conn, "email", self.ids.email_field.text, order_by="id")[0]
+                conn.close()
+            except Exception:
+                pass
+            if user is None:
+                self.ids.email_field.helper_text = '[color=#FF0000]Invalid Email[/color]'
+            else:
+                #pwd_chk = hashlib.sha256(pwd_chk.encode()).hexdigest()
+                if self.ids.pass_field.ids.pwd_text_field.text == user[6]:
+                    account_type = user[7]
+                    # info.text = '[color=#00FF00]Logged In successfully!!![/color]'
+                    self.ids.pass_field.ids.pwd_text_field.helper_text = ""
+                    self.ids.email_field.helper_text = ""
+                    if account_type == 'Administrator':
+                        # print(self.parent.parent.parent.ids)
+                        app.app_scrn_mgr.current = 'admin'
+                    else:
+                        app.app_scrn_mgr.current = 'cashier'
+                else:
+                    self.ids.pass_field.ids.pwd_text_field.helper_text = '[color=#FF0000]Invalid Password[/color]'
+        else:
+            if self.ids.email_field.text == "":
+                self.ids.email_field.helper_text = "Email required"
+            if self.ids.pass_field.ids.pwd_text_field.text == "":
+                self.ids.pass_field.ids.pwd_text_field.helper_text = "Password required"
 
 
 class ClickableTextFieldRound(MDRelativeLayout):
     text = StringProperty()
     hint_text = StringProperty()
+    helper_text = StringProperty()

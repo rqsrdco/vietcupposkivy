@@ -11,6 +11,7 @@ from kivy.utils import get_color_from_hex as ColorHex
 
 from vietcuppos.font_definitions import theme_font_styles
 from vietcuppos.color_definitions import colors, hue, palette
+from vietcuppos.local_database import DatabaseSQLite
 
 
 class Theme_Manger(EventDispatcher):
@@ -82,6 +83,8 @@ class POSApp(App):
     theme_manager = ObjectProperty()
     app_scrn_mgr = ObjectProperty()
 
+    local_sqlite = ObjectProperty()
+
     theme_dialog = ObjectProperty()
     theme_cls = ObjectProperty()
 
@@ -89,8 +92,11 @@ class POSApp(App):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
         self.theme_manager = Theme_Manger()
         self.app_scrn_mgr = MainAppManager()
+        self.local_sqlite = DatabaseSQLite()
+
         self.KV_DIR = os.path.join(self.directory, "vietcuppos", "uix")
         self.load_all_kv_strings()
 

@@ -17,6 +17,8 @@ from vietcuppos.uix.auth import LoginScreen
 from vietcuppos.uix.admin import AdminWindow
 from vietcuppos.uix.cashier import CashierWindow
 
+from vietcuppos.uix.mdicons import PreviousMDIcons
+
 
 class MainApp(POSApp):
 
@@ -42,6 +44,7 @@ class MainApp(POSApp):
         self.app_scrn_mgr.add_widget(LoginScreen())
         self.app_scrn_mgr.add_widget(CashierWindow())
         self.app_scrn_mgr.add_widget(AdminWindow())
+        self.app_scrn_mgr.add_widget(PreviousMDIcons())
         return self.app_scrn_mgr
 
     def on_start(self):

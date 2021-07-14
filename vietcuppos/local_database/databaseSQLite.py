@@ -12,18 +12,21 @@ tmStmp = "{}{}{}".format(tm.tm_mday, tm.tm_mon, tm.tm_year)
 
 class DatabaseSQLite:
     def __init__(self):
-        if not os.path.exists("database/"):
-            os.makedirs("database/")
+        # db_dir
+        self.db_dir = "vietcuppos/local_database/"
+        if not os.path.exists(self.db_dir):
+            os.makedirs(self.db_dir)
 
         # .db file
         self.db = "VietCupPOS.db"
 
     def fetchLastRow(self, table_name, conn):
         try:
-            rw = conn.execute('select * from {}'.format(table_name)).fetchall()[-1]
+            rw = conn.execute(
+                'select * from {}'.format(table_name)).fetchall()[-1]
             return rw
         except Error as e:
-            #pass
+            # pass
             print(e)
             return None
         finally:
@@ -37,7 +40,7 @@ class DatabaseSQLite:
             try:
                 c = conn.execute("select * from {}".format(tableName))
                 fields = tuple([des[0] for des in c.description][:])
-                #print(fields)
+                # print(fields)
                 print("DATA : {}".format(data))
                 if "id" in fields:
                     fields = tuple(list(fields)[1:])
@@ -52,7 +55,7 @@ class DatabaseSQLite:
                 print("Inserted")
                 return self.fetchLastRow(tableName, conn)
             except Error as e:
-                #pass
+                # pass
                 print(e)
             finally:
                 if conn:
@@ -159,7 +162,8 @@ class DatabaseSQLite:
     def connect_database(self):
         conn = None
         try:
-            conn = sqlite3.connect("database/" + self.db, detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
+            conn = sqlite3.connect(
+                self.db_dir + self.db, detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
             print("DB connected")
         except Error:
             pass

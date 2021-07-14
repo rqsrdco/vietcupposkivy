@@ -18,6 +18,9 @@ class PreviousMDIcons(Screen):
 
         self.name = 'mdicons_scrn'
 
+    def on_enter(self):
+        self.set_list_md_icons()
+
     def set_list_md_icons(self, text="", search=False):
         '''Builds a list of icons for the screen MDIcons.'''
 

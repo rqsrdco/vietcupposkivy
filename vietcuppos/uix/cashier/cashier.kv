@@ -26,9 +26,33 @@
             
             LeftNavigationItem:
                 id: mdicons
-                text: "MDIcons"
+                text: "A"
                 icon: "simple-icons"
-                on_release: root.change_left_scrn("mdicons_scrn")
+                on_release: print(self)
+
+            LeftNavigationItem:
+                id: mdiconsa
+                text: "MDIcons"
+                icon: "airballoon"
+                on_release: print(self)
+
+            LeftNavigationItem:
+                id: mdiconsb
+                text: "B"
+                icon: "apple-icloud"
+                on_release: print(self)
+
+            LeftNavigationItem:
+                id: mdiconsc
+                text: "C"
+                icon: "clover"
+                on_release: print(self)
+
+            LeftNavigationItem:
+                id: mdiconsd
+                text: "D"
+                icon: "account-heart"
+                on_release: print(self)
 
             LeftLogoItem:
 
@@ -183,22 +207,3 @@
             text: "Bills"
             adaptive_size: True
             pos_hint: {"center_y": .5}
-
-<SwipeToDeleteItem>:
-    size_hint_y: None
-    height: content.height
-
-    MDCardSwipeLayerBox:
-        padding: "8dp"
-
-        MDIconButton:
-            icon: "trash-can"
-            pos_hint: {"center_y": .5}
-            on_release: print(root.parent.parent.parent.parent)#app.remove_item(root)
-
-    MDCardSwipeFrontBox:
-
-        OneLineListItem:
-            id: content
-            text: root.text
-            _no_ripple_effect: True

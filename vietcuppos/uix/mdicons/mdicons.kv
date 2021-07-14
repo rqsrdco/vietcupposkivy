@@ -18,6 +18,10 @@
             adaptive_height: True
 
             MDIconButton:
+                on_release: app.root.current = "auth"
+                icon: "location-exit"
+
+            MDIconButton:
                 icon: 'magnify'
                 on_press: app.show_alert()
 

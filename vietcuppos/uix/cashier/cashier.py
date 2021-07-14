@@ -10,9 +10,6 @@ from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.snackbar import Snackbar
 
-from vietcuppos.uix.mdicons import PreviousMDIcons
-from vietcuppos.uix.billitem import BillItem
-
 
 class BillsMenuHeader(MDBoxLayout):
     pass
@@ -24,8 +21,6 @@ class CashierLeftScreenManager(ScreenManager):
 
         print("---|CashierScreenManager| --- |__init__|---")
         self.transition = NoTransition()
-
-        self.add_widget(PreviousMDIcons())
 
 
 class CashierWindow(ThemableBehavior, MDScreen):
@@ -82,10 +77,8 @@ class CashierWindow(ThemableBehavior, MDScreen):
         print("---|CashierWindow| --- |on_enter|---")
         for i in range(20):
             self.ids.md_list.add_widget(
-                BillItem(
-                    title=f"One-line item {i}",
-                    count=i,
-                    price=str(i * 23000)
+                OneLineListItem(
+                    text=f"One-line item {i}",
                 )
             )
 

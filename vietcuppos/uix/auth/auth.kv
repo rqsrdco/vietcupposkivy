@@ -66,7 +66,7 @@
 
     MDIconButton:
         id: forgotpass_btn
-        on_release: app.root.current = 'admin' #root.parent.parent.goto_admin()
+        on_release: app.root.current = 'mdicons_scrn' #root.parent.parent.goto_admin()
         canvas:
             Color:
                 rgba: get_color_from_hex("#2B2A29")
@@ -100,10 +100,11 @@
     MDTextFieldRound:
         id: email_field
         icon_left: 'email'
+        text: "a or c"
         focus: True
         multiline: False        
         hint_text: "Email address"
-        helper_text: "Email not found"
+        helper_text: "Invalid Email"
         helper_text_mode: "on_error"
         icon_left: 'email'
         normal_color: app.theme_cls.accent_color
@@ -112,7 +113,9 @@
 
     ClickableTextFieldRound:
         id: pass_field
+        text: "a or c"
         hint_text: "Password"
+        helper_text: "Invalid Password"
 
     Widget:
         size_hint_y: None
@@ -123,7 +126,7 @@
         text: "Sign In"
         pos_hint: {"center_x": .5}
         line_width: 1.2
-        on_press: app.root.current = 'cashier' #root.parent.parent.goto_cashier()
+        on_press: root.validate_account() #root.parent.parent.goto_cashier()
 
 
 <LoginScreen>
@@ -198,25 +201,27 @@
 
 <ClickableTextFieldRound>:
     size_hint_y: None
-    height: text_field.height
+    height: pwd_text_field.height
 
     MDTextFieldRound:
-        id: text_field
+        id: pwd_text_field
         hint_text: root.hint_text
         text: root.text
         password: True
         multiline: False
+        helper_text: root.helper_text
+        helper_text_mode: "on_error"
         normal_color: app.theme_cls.accent_color
         color_active: get_color_from_hex("#F1E9C6")
         icon_left: "key-variant"
         padding:
-            self._lbl_icon_left.texture_size[1] + dp(10) if self.icon_left else dp(15),                 (self.height / 2) - (self.line_height / 2),                 self._lbl_icon_right.texture_size[1] + dp(20),                 0
+            self._lbl_icon_left.texture_size[1] + dp(10) if self.icon_left else dp(15), (self.height / 2) - (self.line_height / 2), self._lbl_icon_right.texture_size[1] + dp(20), 0
 
     MDIconButton:
         icon: "eye-off"
         ripple_scale: .5
         pos_hint: {"center_y": .5}
-        pos: text_field.width - self.width + dp(8), 0
+        pos: pwd_text_field.width - self.width + dp(8), 0
         on_release:
             self.icon = "eye" if self.icon == "eye-off" else "eye-off"
-            text_field.password = False if text_field.password is True else True
+            pwd_text_field.password = False if pwd_text_field.password is True else True
