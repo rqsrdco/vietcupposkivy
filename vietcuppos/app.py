@@ -101,6 +101,7 @@ class POSApp(App):
                     path = os.path.join(d, f)
                     with open(path, encoding="utf-8") as kv_file:
                         Builder.load_string(kv_file.read())
+    # use KivyMD or not
 
     def on_use_kivymd(self, *args):
         if self.use_kivymd:
