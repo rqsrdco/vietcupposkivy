@@ -1,0 +1,50 @@
+<NumberListItem>
+    text: root.text
+
+<BillItem>
+    #canvas.before:
+    #    Color:
+    #        rgba: self.md_bg_color
+    #    RoundedRectangle:
+    #        size: self.size
+    #        pos: self.pos
+    #        radius: root.radius
+    id: bill_item
+    orientation: "horizontal"
+    size_hint_y: None
+    height: self.minimum_height
+    elevation: 12
+    padding: "12dp", "6dp", "12dp", "6dp"
+    radius: 12
+    md_bg_color:
+        app.theme_cls.bg_dark \
+        if not root.md_bg_color else root.md_bg_color
+
+    MDLabel:
+        id: title
+        text: root.title
+        font_style: "H6"
+        bold: True
+        markup: True
+        size_hint_x: None
+        width: 100
+        valign: "center"
+        halign: "left"
+
+    Button:
+        id: count
+        pos_hint: {'center_y': .5}
+        text: str(root.count)
+        font_size: "14sp"
+        on_release: root.init_dropdown()
+
+    MDLabel:
+        id: price
+        text: root.price
+        font_style: "H6"
+        bold: True
+        markup: True
+        size_hint_x: None
+        height: 50
+        valign: "center"
+        halign: "right"

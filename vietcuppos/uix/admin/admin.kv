@@ -1,0 +1,24 @@
+
+
+<AdminWindow>:
+    MDBackdrop:
+        id: backdrop
+        on_open: print("on_open")
+        on_close: print("on_close")
+        left_action_items: [["menu", lambda x: self.open()]]
+        title: "POS"
+        header_text: "Menu"
+        header: True
+        background_color: app.theme_cls.accent_color
+        padding: [40]
+        close_icon: 'posapp/assets/images/logo.png'
+        right_action_items: [['location-exit',lambda x : app.show_alert()]]
+
+        MDBackdropBackLayer:
+            MyBackdropBackLayer:
+                id: backlayer
+
+        MDBackdropFrontLayer:
+            MyBackdropFrontLayer:
+                backdrop: backdrop
+                backlayer: backlayer
