@@ -1,12 +1,12 @@
 #:import C kivy.utils.get_color_from_hex
 
 <CashierWindow>:
-    md_bg_color: app.theme_cls.primary_color
+    md_bg_color: app.theme_manager.bg_color
     BoxLayout:
         orientation: 'horizontal'
         LeftNavigation:
             id: rail
-            navigation_bg_color: app.theme_cls.primary_color
+            navigation_bg_color: app.theme_manager.bg_color
             active_color: C("#F1E9C60F") #app.theme_cls.accent_color
 
             LeftLogoItem:

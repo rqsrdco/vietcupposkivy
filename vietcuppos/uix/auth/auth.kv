@@ -33,20 +33,23 @@
     MDTextField:
         id: get_email_field
         hint_text: "Email Address ?"
-        icon_left: 'email'
-        icon_right: "account"
+        current_hint_text_color: [0,1,0,1]
+        #icon_left: 'email'
         helper_text: "example@gmail.com"
         helper_text_mode: "on_focus"
-        #pos_hint: {"center_x":.5,"center_y":.5}
-        #size_hint_x: None
-        #width: 400
-        font_size: 25
+        max_text_length: 36
+        color_mode: "custom" #["primary", "accent", "custom"]
+        mode: "rectangle" # ["rectangle", "fill"]
         line_color_normal:  [1,0,0,1]
         line_color_focus: [0,1,0,1]
-        icon_right_color: [0,0,1,1]
-        mode: "fill"
+        line_anim: True
+        error_color: [1,0,0,1]
         fill_color: [0,0,0,.6]
-        multiline: False
+        active_line: True
+        icon_right: "account"
+        icon_right_color: [0,0,1,1]
+        text_color: [0,1,0,1]
+        font_size: "18sp"
         focus: True
 
     #MDTextField:
@@ -109,13 +112,10 @@
         icon_left: 'email'
         normal_color: app.theme_cls.accent_color
         color_active: get_color_from_hex("#F1E9C6")
-        on_text_validate: pass_field.focus = True
+        on_text_validate: pwds.pwd_field.focus = True
 
-    ClickableTextFieldRound:
-        id: pass_field
-        text: "a or c"
-        hint_text: "Password"
-        helper_text: "Invalid Password"
+    PasswordFieldRec:
+        id: pwds
 
     Widget:
         size_hint_y: None
@@ -199,29 +199,3 @@
         SignInBox:
             id: signin_box
 
-<ClickableTextFieldRound>:
-    size_hint_y: None
-    height: pwd_text_field.height
-
-    MDTextFieldRound:
-        id: pwd_text_field
-        hint_text: root.hint_text
-        text: root.text
-        password: True
-        multiline: False
-        helper_text: root.helper_text
-        helper_text_mode: "on_error"
-        normal_color: app.theme_cls.accent_color
-        color_active: get_color_from_hex("#F1E9C6")
-        icon_left: "key-variant"
-        padding:
-            self._lbl_icon_left.texture_size[1] + dp(10) if self.icon_left else dp(15), (self.height / 2) - (self.line_height / 2), self._lbl_icon_right.texture_size[1] + dp(20), 0
-
-    MDIconButton:
-        icon: "eye-off"
-        ripple_scale: .5
-        pos_hint: {"center_y": .5}
-        pos: pwd_text_field.width - self.width + dp(8), 0
-        on_release:
-            self.icon = "eye" if self.icon == "eye-off" else "eye-off"
-            pwd_text_field.password = False if pwd_text_field.password is True else True

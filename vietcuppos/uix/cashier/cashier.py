@@ -1,4 +1,4 @@
-from kivy.uix.screenmanager import ScreenManager, NoTransition
+from kivy.uix.screenmanager import ScreenManager, FadeTransition
 from kivy.properties import ObjectProperty, StringProperty
 from kivy.metrics import dp
 from kivy.utils import get_color_from_hex as C
@@ -10,6 +10,9 @@ from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.snackbar import Snackbar
 
+from vietcuppos.uix.components import ItemBill
+from kivy.utils import get_color_from_hex
+
 
 class BillsMenuHeader(MDBoxLayout):
     pass
@@ -20,7 +23,7 @@ class CashierLeftScreenManager(ScreenManager):
         super().__init__(**kwargs)
 
         print("---|CashierScreenManager| --- |__init__|---")
-        self.transition = NoTransition()
+        self.transition = FadeTransition()
 
 
 class CashierWindow(ThemableBehavior, MDScreen):
@@ -77,8 +80,11 @@ class CashierWindow(ThemableBehavior, MDScreen):
         print("---|CashierWindow| --- |on_enter|---")
         for i in range(20):
             self.ids.md_list.add_widget(
-                OneLineListItem(
-                    text=f"One-line item {i}",
+                ItemBill(
+                    item_name="Milk Coffee",
+                    item_count=i,
+                    item_price=i * 13123,
+                    item_color=get_color_from_hex("#F1E9C6")
                 )
             )
 
