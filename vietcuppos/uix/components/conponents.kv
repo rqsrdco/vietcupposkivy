@@ -147,6 +147,8 @@
                 ripple_scale: .5 if DEVICE_TYPE == "mobile" else 1
                 pos_hint: {'center_y': .5}
                 md_bg_color_disabled: 0, 0, 0, 0
+                on_press: print(root.parent.root)
+                #on_release: root.parent.remove_item(root)
     
     #Widget:
     #    size_hint_x: None

@@ -1,0 +1,39 @@
+#:import C kivy.utils.get_color_from_hex
+
+<OrderScreen>
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: dp(40)
+        BottomNavigation:
+            bg_color: app.theme_manager.bg_color
+
+            Button_Item:
+                text: "Ordered Bills"
+                icon: "bell-outline"
+                icon_color: C("#E3BFA3")
+                text_color: C("#F1E9C6")
+                button_bg_color: C("#F1E9C60F")
+                badge_text: "+12"
+                badge_bg_color: C("#F1E9C60F")
+                badgeitem_color: C("#025F50")
+                badge_bold: True
+
+            Button_Item:
+                text: "QRCode Scan"
+                #badge_bg_color: C("#F1E9C60F")
+                #badgeitem_color: C("#025F50")
+                badge_disabled: True
+                icon: "qrcode-scan"
+                icon_color: C("#E3BFA3")
+                text_color: C("#F1E9C6")
+                button_bg_color: C("#F1E9C60F")
+
+            Button_Item:
+                text: "Printer"
+                icon: "printer"
+                icon_color: C("#E3BFA3")
+                text_color: C("#F1E9C6")
+                button_bg_color: C("#F1E9C60F")
+                #badgeitem_color: C("#025F50")
+                #badge_bg_color: C("#F1E9C60F")
+                badge_disabled: True

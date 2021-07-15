@@ -26,33 +26,15 @@
             
             LeftNavigationItem:
                 id: mdicons
-                text: "A"
-                icon: "simple-icons"
-                on_release: print(self)
+                text: "Order"
+                icon: "food-fork-drink"
+                on_release: root.change_left_scrn('orderscreen')
 
             LeftNavigationItem:
                 id: mdiconsa
-                text: "MDIcons"
-                icon: "airballoon"
-                on_release: print(self)
-
-            LeftNavigationItem:
-                id: mdiconsb
-                text: "B"
-                icon: "apple-icloud"
-                on_release: print(self)
-
-            LeftNavigationItem:
-                id: mdiconsc
-                text: "C"
-                icon: "clover"
-                on_release: print(self)
-
-            LeftNavigationItem:
-                id: mdiconsd
-                text: "D"
-                icon: "account-heart"
-                on_release: print(self)
+                text: "Informations"
+                icon: "information"
+                on_release: root.change_left_scrn('intros')
 
             LeftLogoItem:
 
@@ -86,124 +68,3 @@
 
             LeftNavigationContent:
                 id: left_navigation_contents
-                #CashierScreenManager:
-                #    id: scr_mng
-
-        BottomMenu:
-            id: menu_bottom
-            on_open: but.icon = "arrow-down"
-            on_dismiss: but.icon ="coffee"
-            BottomMenuMainContent:
-                orientation: "vertical"
-                MDToolbar:
-                    id: toolbar
-                    icon: "nature-people"
-                    size_hint_y: None
-                    height: dp(52)
-                    right_action_items: [["nature-people", lambda x: root.open_menu(x), "this is the More Actions"]]
-
-                ScrollView:
-                    MDBoxLayout:
-                        id: list_recent_bill
-                        adaptive_height: True
-                        orientation: "vertical"
-                        MDList:
-                            id: md_list
-                            padding: 30
-
-            BottomMenuTopContent:
-                MDBoxLayout:
-                    size_hint_y: None
-                    height: dp(52)
-                    padding: dp(10)
-
-                    MDIconButton:
-                        id: btn_menu_save
-                        icon: "content-save"
-                        size_hint_y: None
-                        height: 52
-                        pos_hint: {'center_x': .5, 'center_y': .5}
-                        text_theme_color: "Custom"
-                        text_color: 1,1,1,1
-
-                    MDIconButton:
-                        id: btn_menu_print
-                        size_hint_y: None
-                        height: 52
-                        icon: "printer-pos"
-                        pos_hint: {'center_x': .5, 'center_y': .5}
-                        text_theme_color: "Custom"
-                        text_color: 1,1,1,1
-
-                    MDIconButton:
-                        id: btn_menu_cash
-                        size_hint_y: None
-                        height: 52
-                        icon: "cash-usd-outline"
-                        pos_hint: {'center_x': .5, 'center_y': .5}
-                        text_theme_color: "Custom"
-                        text_color: 1,1,1,1
-
-                    MDIconButton:
-                        id: btn_menu_barcode
-                        size_hint_y: None
-                        height: 52
-                        icon: "barcode-scan"
-                        pos_hint: {'center_x': .5, 'center_y': .5}
-                        text_theme_color: "Custom"
-                        text_color: 1,1,1,1
-                    MDLabel:
-                        text: "Swipe up for Coffee"
-                        valign: 'center'
-                        halign: 'center'
-                        theme_text_color: "Custom"
-                        text_color: C("#E3BFA3")
-
-                    MDIconButton:
-                        id: but
-                        size_hint_y: None
-                        height: 52
-                        icon: "coffee"
-                        pos_hint: {"center_y": .5}
-                        theme_text_color: "Custom"
-                        text_color: 1,1,1,1
-                        on_release:
-                            if menu_bottom.get_status()=="close": menu_bottom.open()
-                            else:menu_bottom.dismiss()
-
-            BottomMenuBottomContent:
-                MDBoxLayout:
-                    canvas.before:
-                        Color:
-                            rgba: C("#382B2A0F")
-                        Rectangle:
-                            pos: self.pos
-                            size: self.size
-                    size_hint_y: None
-                    height: menu_bottom.height - dp(104)
-
-                    ScrollView:
-                        MDBoxLayout:
-                            id: list_coffee
-                            adaptive_height: True
-                            orientation: "vertical"
-
-
-<BillsMenuHeader>:
-    orientation: "vertical"
-    adaptive_size: True
-    padding: "4dp"
-
-    MDBoxLayout:
-        spacing: "12dp"
-        adaptive_size: True
-        MDIconButton:
-            icon: "nature-people"
-            size_hint_y: None
-            height: dp(52)
-            pos_hint: {"center_y": .5}
-
-        MDLabel:
-            text: "Bills"
-            adaptive_size: True
-            pos_hint: {"center_y": .5}

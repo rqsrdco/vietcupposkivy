@@ -6,7 +6,7 @@ from kivy.properties import AliasProperty, BooleanProperty, ColorProperty, ListP
 import os
 from kivy.clock import Clock
 from kivy.core.window import Window
-from kivy.uix.screenmanager import ScreenManager, ShaderTransition
+from kivy.uix.screenmanager import ScreenManager, SwapTransition
 from kivy.utils import get_color_from_hex as ColorHex
 
 from vietcuppos.font_definitions import theme_font_styles
@@ -76,7 +76,7 @@ class MainAppManager(ScreenManager):
 
     def __init__(self, **kwargs):
         super(MainAppManager, self).__init__(**kwargs)
-        self.transition = ShaderTransition()
+        self.transition = SwapTransition()
 
 
 class POSApp(App):

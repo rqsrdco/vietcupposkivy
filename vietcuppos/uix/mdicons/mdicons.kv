@@ -8,18 +8,14 @@
 
 
 <PreviousMDIcons>:
-
     MDBoxLayout:
+        md_bg_color: app.theme_manager.bg_color
         orientation: 'vertical'
         spacing: dp(10)
         padding: dp(20)
 
         MDBoxLayout:
             adaptive_height: True
-
-            MDIconButton:
-                on_release: app.root.current = "auth"
-                icon: "location-exit"
 
             MDIconButton:
                 icon: 'magnify'
@@ -29,6 +25,10 @@
                 id: search_field
                 hint_text: 'Search icon'
                 on_text: root.set_list_md_icons(self.text, True)
+
+            MDIconButton:
+                on_release: app.root.current = "auth"
+                icon: "location-exit"
 
         RecycleView:
             id: rv
