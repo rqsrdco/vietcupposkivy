@@ -6,6 +6,7 @@ from kivymd.theming import ThemableBehavior
 from kivymd.uix.button import MDIconButton
 from kivymd.uix.list import ILeftBody
 from kivymd.uix.card import MDCard
+from kivymd.uix.list import MDList
 from kivymd.app import MDApp
 
 from kivy.properties import ObjectProperty, StringProperty, ColorProperty, NumericProperty, BooleanProperty
@@ -83,6 +84,18 @@ class ItemBill(MDCard, EventDispatcher):
     def on_anything(self, *args, **kwargs):
         print('The flexible function has *args of', str(args),
               "and **kwargs of", str(kwargs))
+
+
+class ListItemBill(MDList):
+    _added_list = []
+
+    def get_recent_added(self):
+        return self._added_list
+
+    def clear_added(self):
+        if not self._added_list:
+            return
+        self._added_list = []
 
 
 class ItemMenu(ThemableBehavior, ButtonBehavior, CircularRippleBehavior, BoxLayout):
