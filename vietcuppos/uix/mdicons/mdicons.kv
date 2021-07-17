@@ -8,8 +8,14 @@
 
 
 <PreviousMDIcons>:
+    md_bg_color: get_color_from_hex("#382B2A")
     MDBoxLayout:
-        md_bg_color: app.theme_manager.bg_color
+        canvas.before:
+            Color:
+                rgba: C("#F1E9C60F")
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
         orientation: 'vertical'
         spacing: dp(10)
         padding: dp(20)

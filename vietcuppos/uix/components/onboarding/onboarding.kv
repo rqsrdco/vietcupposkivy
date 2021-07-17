@@ -23,7 +23,7 @@
     FloatLayout:
         id: rounded_box
         size_hint_y: None
-        height: circles_box.y + circles_box.height * 2
+        height: circles_box.y + circles_box.height * 2 + dp(10)
         canvas.before:
             Color:
                 rgba: root.bottom_bar_color if root.bottom_bar_color else app.theme_cls.bg_dark
@@ -50,11 +50,37 @@
             size: self.minimum_width, root.circles_size
             spacing: root.circles_size / 2
 
+        #MDFlatButton:
+        #    text: "Skip"
+        #    on_release: root._on_finish_dispatch()
+        #    disabled: False if root.skip_button else True
+        #    opacity: 1 if root.skip_button else 0
+        #    theme_text_color: "Custom"
+        #    text_color: root.circles_color if root.circles_color else root.theme_cls.primary_color
+        #    pos_hint: {"right": .95, "center_y": .5}
         MDFlatButton:
-            text: "Skip"
-            on_release: root._on_finish_dispatch()
-            disabled: False if root.skip_button else True
-            opacity: 1 if root.skip_button else 0
+            text: "Clear Select"
+            on_release: root._on_clear_dispatch()
+            disabled: False #if root.skip_button else True
+            opacity: 1 #if root.skip_button else 0
             theme_text_color: "Custom"
             text_color: root.circles_color if root.circles_color else root.theme_cls.primary_color
-            pos_hint: {"right": .95, "center_y": .5}
+            pos_hint: {"left": 1, "center_y": .5}
+
+        MDFlatButton:
+            text: "Select All"
+            on_release: root._on_select_all_dispatch()
+            disabled: False# if root.skip_button else True
+            opacity: 1# if root.skip_button else 0
+            theme_text_color: "Custom"
+            text_color: root.circles_color if root.circles_color else root.theme_cls.primary_color
+            pos_hint: {"center_x": .5, "top": 1}
+
+        MDFlatButton:
+            text: "Add to Order"
+            on_release: root._on_ok_dispatch()
+            disabled: False# if root.skip_button else True
+            opacity: 1 #if root.skip_button else 0
+            theme_text_color: "Custom"
+            text_color: root.circles_color if root.circles_color else root.theme_cls.primary_color
+            pos_hint: {"right": 1, "center_y": .5}

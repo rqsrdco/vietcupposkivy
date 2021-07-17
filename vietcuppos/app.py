@@ -61,7 +61,6 @@ class Theme_Manger(EventDispatcher):
             theme_font_styles.append(style)
 
     def on_bg_color(self, *args):
-        print(str(args))
         if len(self.bg_color) > 3:
             Logger.info(
                 "bg_color alpha channel cannot be set. Ignoring provided alpha channel value"

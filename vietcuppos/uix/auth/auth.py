@@ -113,8 +113,10 @@ class SignInBox(ScaleBox):
                     self.ids.pwds.pwd_field.helper_text = ""
                     self.ids.email_field.helper_text = ""
                     if account_type == 'Administrator':
-                        app.app_scrn_mgr.current = 'admin'
+                        self.canvas.clear()
+                        app.root.current = 'admin'
                     else:
+                        self.canvas.clear()
                         app.app_scrn_mgr.current = 'cashier'
                 else:
                     self.ids.pwds.pwd_field.helper_text = '[color=#FF0000]Invalid Password[/color]'

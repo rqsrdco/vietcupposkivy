@@ -1,6 +1,7 @@
 
 
 <AdminWindow>:
+    md_bg_color: get_color_from_hex("#382B2A")
     MDBackdrop:
         id: backdrop
         on_open: print("on_open")
@@ -9,7 +10,7 @@
         title: "POS"
         header_text: "Menu"
         header: True
-        background_color: app.theme_cls.accent_color
+        background_color: get_color_from_hex("#F1E9C60F")
         padding: [40]
         close_icon: 'vietcuppos/images/logo.png'
         right_action_items: [['location-exit',lambda x : app.show_alert()]]

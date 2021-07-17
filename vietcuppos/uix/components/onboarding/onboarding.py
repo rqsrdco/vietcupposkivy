@@ -13,10 +13,11 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.carousel import Carousel
 from kivy.uix.widget import Widget
 from kivymd.theming import ThemableBehavior
+from kivy.utils import get_color_from_hex as ColorHex
 
 
 class ItemCircles(ThemableBehavior, Widget):
-    _circles_color = ListProperty(None)
+    _circles_color = ListProperty(ColorHex("#F1E9C60F"))
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -62,7 +63,7 @@ class MyCarousel(ThemableBehavior, Carousel):
             if self._current_circle > 0:
                 self._current_circle -= 1
             else:
-                self.parent._on_finish_dispatch()
+                self.reset()
 
         elif mode == "previous":
             if self._current_circle < self.total_circles:
@@ -111,11 +112,14 @@ class Onboarding(ThemableBehavior, BoxLayout, EventDispatcher):
     bottom_bar_radius = ListProperty([dp(20), dp(20), 0, 0])
     show_bottom_bar = BooleanProperty(True)
     bottom_bar_color = ListProperty(None)
-    circles_color = ListProperty(None)
+    circles_color = ListProperty(ColorHex("#F1E9C6"))
 
     def __init__(self, **kwargs):
         super(Onboarding, self).__init__(**kwargs)
-        self.register_event_type("on_finish")
+        # self.register_event_type("on_finish")
+        self.register_event_type("on_clear")
+        self.register_event_type("on_select_all")
+        self.register_event_type("on_ok")
         Clock.schedule_once(lambda x: self._update())
 
     def add_widget(self, widget, index=0, canvas=None):
@@ -124,10 +128,26 @@ class Onboarding(ThemableBehavior, BoxLayout, EventDispatcher):
         else:
             super().add_widget(widget, index=index, canvas=canvas)
 
-    def _on_finish_dispatch(self):
-        self.dispatch("on_finish")
+    # on_clear
 
-    def on_finish(self, *args):
+    def _on_clear_dispatch(self):
+        self.dispatch("on_clear")
+
+    def on_clear(self, *args):
+        pass
+
+    # on_select_all
+    def _on_select_all_dispatch(self):
+        self.dispatch("on_select_all")
+
+    def on_select_all(self, *args):
+        pass
+
+    # on_ok
+    def _on_ok_dispatch(self):
+        self.dispatch("on_ok")
+
+    def on_ok(self, *args):
         pass
 
     def reset(self):

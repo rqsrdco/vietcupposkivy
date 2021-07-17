@@ -41,7 +41,8 @@ class SQLRawCommand:
             id integer PRIMARY KEY,
             code text,
             name text,
-            price real
+            price real,
+            quantity integer
             );
     """
     create_table_bill = """

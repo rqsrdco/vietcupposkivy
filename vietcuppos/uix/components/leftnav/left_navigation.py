@@ -64,8 +64,8 @@ class LeftNavigationContent(BoxLayout):
 class LeftNavigation(ThemableBehavior, BoxLayout):
     opening_width = NumericProperty("200dp")
     navigation_bg_color = ListProperty()
-    item_height = NumericProperty("52dp")
-    item_radius = NumericProperty("68dp")
+    item_height = NumericProperty("60")
+    item_radius = NumericProperty("52dp")
     active_color = ListProperty()
     transition = StringProperty("out_quad")
     duration = NumericProperty(0.2)

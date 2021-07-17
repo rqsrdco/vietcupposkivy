@@ -1,9 +1,15 @@
 #:import C kivy.utils.get_color_from_hex
 
 <CashierWindow>:
-    md_bg_color: app.theme_manager.bg_color
+    md_bg_color: get_color_from_hex("#382B2A")
     BoxLayout:
         orientation: 'horizontal'
+        canvas.before:
+            Color:
+                rgba: C("#F1E9C60F")
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
         LeftNavigation:
             id: rail
             navigation_bg_color: app.theme_manager.bg_color
@@ -23,6 +29,7 @@
                     on_release:
                         if rail.get_state() == "open": rail.dismiss(); self.icon="vietcuppos/images/logo.png"
                         else: rail.open(); self.icon ="vietcuppos/images/logo.png"
+            LeftLogoItem:
             
             LeftNavigationItem:
                 id: mdicons
@@ -30,11 +37,11 @@
                 icon: "food-fork-drink"
                 on_release: root.change_left_scrn('orderscreen')
 
-            LeftNavigationItem:
-                id: mdiconsa
-                text: "Informations"
-                icon: "information"
-                on_release: root.change_left_scrn('intros')
+            #LeftNavigationItem:
+            #    id: mdiconsa
+            #    text: "Informations"
+            #    icon: "information"
+            #    on_release: root.change_left_scrn('intros')
 
             LeftLogoItem:
 

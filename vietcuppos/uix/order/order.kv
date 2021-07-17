@@ -1,39 +1,231 @@
 #:import C kivy.utils.get_color_from_hex
 
+<CoffeeItem@OnboardingItem>
+
+<DrinkItem@OnboardingItem>
+
+<FoodsItem@OnboardingItem>
+
 <OrderScreen>
+    #menu_coffee: menu_coffee
+    #on_leave: boarding.reset()
+    recent_bill: recent_bill
+    md_bg_color: C("#382B2A")
+
     MDBoxLayout:
-        orientation: "vertical"
-        spacing: dp(40)
-        BottomNavigation:
-            bg_color: app.theme_manager.bg_color
+        orientation: 'horizontal'
+        padding: 0,0,12,12
+        # MENU
+        MDBoxLayout:
+            orientation: "vertical"
+            canvas.before:
+                Color:
+                    rgba: C("#F1E9C60F")
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            Onboarding:
+                id: boarding
+                on_clear: root.clear_callback(*args)
+                on_select_all: root.select_all_callback()
+                on_ok: root.ok_callback()
+                circles_size: dp(15)
+                bottom_bar_color: C("#F1E9C60F")
 
-            Button_Item:
-                text: "Ordered Bills"
-                icon: "bell-outline"
-                icon_color: C("#E3BFA3")
-                text_color: C("#F1E9C6")
-                button_bg_color: C("#F1E9C60F")
-                badge_text: "+12"
-                badge_bg_color: C("#F1E9C60F")
-                badgeitem_color: C("#025F50")
-                badge_bold: True
+                CoffeeItem:
+                    id: coffee_list
+                    ScrollView:
+                        ListItemMenu:
+                            id: coffee_selectionlist
+                
+                DrinkItem:
+                    id: drink_list
+                    ScrollView:
+                        ListItemMenu:
+                            id: drink_selectionlist
 
-            Button_Item:
-                text: "QRCode Scan"
-                #badge_bg_color: C("#F1E9C60F")
-                #badgeitem_color: C("#025F50")
-                badge_disabled: True
-                icon: "qrcode-scan"
-                icon_color: C("#E3BFA3")
-                text_color: C("#F1E9C6")
-                button_bg_color: C("#F1E9C60F")
+                FoodsItem:
+                    id: foods_list
+                    ScrollView:
+                        ListItemMenu:
+                            id: foods_selectionlist
+        # BILLS
+        MDBoxLayout:
+            orientation: 'vertical'
+            size_hint_x: None
+            width: 365
+            #padding: 6,6,6,6
+            #spacing: 12
+            MDGridLayout:
+                cols: 1
+                padding: 6,0,0,0
+                spacing: 6
+                MDBoxLayout:
+                    canvas.before:
+                        Color:
+                            rgba: C("#F1E9C60F")
+                        RoundedRectangle:
+                            size: self.size
+                            pos: self.pos
+                            radius: [(12,12), (12,12), (12,12), (12,12)]
+                    canvas:
+                        Color:
+                            rgba: C("#F1E9C60F")
+                        Line:
+                            rounded_rectangle: self.x , self.y, self.width, self.height, 12
+                            width: 1
+                    spacing: 12
+                    padding: 6,12,6,12
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    height: 52
+                    MDLabel:
+                        text: "Recent Bills"
+                        color: C("#F1E9C6")
+                        halign: "center"
+                        pos_hint: {'center_y': .5}
+                    MDLabel:
+                        id: time_stamp
+                        text: "Wed Aug 21, 2021 | 09 : 44 : 23"
+                        color: C("#F1E9C6")
+                        halign: "center"
+                        pos_hint: {'center_y': .5}
+                ScrollView:
+                    spacing: 12
+                    padding: 6,6,6,6
+                    do_scroll_x: False
+                    do_scroll_y: True
+                    bar_color: C("#025F50")
+                    bar_width: 0
+                    canvas.before:
+                        Color:
+                            rgba: C("#F1E9C60F")
+                        RoundedRectangle:
+                            size: self.size
+                            pos: self.pos
+                            radius: [(12,12), (12,12), (12,12), (12,12)]
+                    canvas:
+                        Color:
+                            rgba: C("#F1E9C60F")
+                        Line:
+                            rounded_rectangle: self.x , self.y, self.width, self.height, 12
+                            width: 1
+                    MDList:
+                        id: recent_bill
+                        spacing: dp(6)
+                        padding: 0,6,0,6
+                        # rECENT BILL
+                MDGridLayout:
+                    cols: 2
+                    size_hint_y: None
+                    height: 68
+                    spacing: 12
+                    padding: 6,12,6,12
+                    canvas.before:
+                        Color:
+                            rgba: C("#F1E9C60F")
+                        RoundedRectangle:
+                            size: self.size
+                            pos: self.pos
+                            radius: [(12,12), (12,12), (12,12), (12,12)]
+                    canvas:
+                        Color:
+                            rgba: C("#F1E9C60F")
+                        Line:
+                            rounded_rectangle: self.x , self.y, self.width, self.height, 12
+                            width: 1
+                    MDLabel:
+                        text: "Subtotal"
+                        color: C("#F1E9C6")
+                        halign: "left"
+                        pos_hint: {'center_y': .5}
+                    MDLabel:
+                        text: "74000"
+                        color: C("#F1E9C6")
+                        halign: "right"
+                        pos_hint: {'center_y': .5}
+                    MDLabel:
+                        text: "TAX"
+                        color: C("#F1E9C6")
+                        halign: "left"
+                        pos_hint: {'center_y': .5}
+                    MDLabel:
+                        text: "7400"
+                        color: C("#F1E9C6")
+                        halign: "right"
+                        pos_hint: {'center_y': .5}
+                    MDLabel:
+                        text: "Total"
+                        color: C("#F1E9C6")
+                        halign: "left"
+                        pos_hint: {'center_y': .5}
+                    MDLabel:
+                        text: "81000"
+                        color: C("#F1E9C6")
+                        halign: "right"
+                        pos_hint: {'center_y': .5}
+                MDGridLayout:
+                    cols: 4
+                    adaptive_height: True
+                    padding: 12,12,12,12
+                    spacing: 12
+                    canvas.before:
+                        Color:
+                            rgba: C("#F1E9C60F")
+                        RoundedRectangle:
+                            size: self.size
+                            pos: self.pos
+                            radius: [(12,12), (12,12), (12,12), (12,12)]
+                    canvas:
+                        Color:
+                            rgba: C("#F1E9C60F")
+                        Line:
+                            rounded_rectangle: self.x , self.y, self.width, self.height, 12
+                            width: 1
+                    
+                    Button_Item:
+                        text: "QRCode Scan"
+                        #badge_bg_color: C("#F1E9C60F")
+                        #badgeitem_color: C("#025F50")
+                        badge_disabled: True
+                        icon: "qrcode-scan"
+                        icon_color: C("#E3BFA3")
+                        text_color: C("#F1E9C6")
+                        button_bg_color: C("#F1E9C60F")
+                        on_release: print("Scan QRCode")
 
-            Button_Item:
-                text: "Printer"
-                icon: "printer"
-                icon_color: C("#E3BFA3")
-                text_color: C("#F1E9C6")
-                button_bg_color: C("#F1E9C60F")
-                #badgeitem_color: C("#025F50")
-                #badge_bg_color: C("#F1E9C60F")
-                badge_disabled: True
+                    Button_Item:
+                        text: "Clear Current Order"
+                        icon: "trash-can-outline"
+                        icon_color: C("#E3BFA3")
+                        text_color: C("#F1E9C6")
+                        button_bg_color: C("#F1E9C60F")
+                        #badgeitem_color: C("#025F50")
+                        #badge_bg_color: C("#F1E9C60F")
+                        badge_disabled: True
+                        on_release: root.clear_bills()
+
+                    Button_Item:
+                        text: "Printer"
+                        icon: "printer"
+                        icon_color: C("#E3BFA3")
+                        text_color: C("#F1E9C6")
+                        button_bg_color: C("#F1E9C60F")
+                        #badgeitem_color: C("#025F50")
+                        #badge_bg_color: C("#F1E9C60F")
+                        badge_disabled: True
+                        on_release: print("Print Bill")
+
+                    Button_Item:
+                        text: "Pay"
+                        icon: "cash"
+                        icon_color: C("#E3BFA3")
+                        text_color: C("#F1E9C6")
+                        button_bg_color: C("#F1E9C60F")
+                        #badge_text: "+12"
+                        badge_bg_color: C("#F1E9C60F")
+                        badgeitem_color: C("#025F50")
+                        badge_bold: True
+                        badge_disabled: True
+                        on_release: print("Pay Order")
+        

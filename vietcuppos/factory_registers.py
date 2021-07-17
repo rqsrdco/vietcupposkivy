@@ -2,6 +2,9 @@ from kivy.factory import Factory
 
 r = Factory.register
 
+r("ItemBill", module="vietcuppos.uix.components")
+r("ItemMenu", module="vietcuppos.uix.components")
+r("ListItemMenu", module="vietcuppos.uix.components")
 r("SweetAlert", module="vietcuppos.uix.sweetalert")
 r("PasswordFieldRec", module="vietcuppos.uix.components")
 r("PasswordFieldRound", module="vietcuppos.uix.components")

@@ -1,4 +1,4 @@
-from kivy.uix.screenmanager import ScreenManager, SwapTransition
+from kivy.uix.screenmanager import ScreenManager, SlideTransition
 from kivy.properties import ObjectProperty
 from kivy.metrics import dp
 from kivy.utils import get_color_from_hex as C
@@ -7,7 +7,7 @@ from kivymd.theming import ThemableBehavior
 from kivymd.uix.screen import MDScreen
 
 from vietcuppos.uix.order import OrderScreen
-from vietcuppos.uix.intros import Intros
+#from vietcuppos.uix.intros import Intros
 
 
 class CashierLeftScreenManager(ScreenManager):
@@ -15,7 +15,7 @@ class CashierLeftScreenManager(ScreenManager):
         super().__init__(**kwargs)
 
         print("---|CashierScreenManager| --- |__init__|---")
-        self.transition = SwapTransition()
+        self.transition = SlideTransition()
 
 
 class CashierWindow(ThemableBehavior, MDScreen):
@@ -28,7 +28,7 @@ class CashierWindow(ThemableBehavior, MDScreen):
         self.name = 'cashier'
         self.left_cashier_scrn_mgr = CashierLeftScreenManager()
         self.left_cashier_scrn_mgr.add_widget(OrderScreen())
-        self.left_cashier_scrn_mgr.add_widget(Intros())
+        # self.left_cashier_scrn_mgr.add_widget(Intros())
         self.ids.left_navigation_contents.add_widget(
             self.left_cashier_scrn_mgr)
 

@@ -72,7 +72,7 @@
         on_release: app.root.current = 'mdicons_scrn' #root.parent.parent.goto_admin()
         canvas:
             Color:
-                rgba: get_color_from_hex("#2B2A29")
+                rgba: get_color_from_hex("#F1E9C60F")
             Line:
                 width: 1.2
                 circle: (self.center_x, self.center_y, sp(52))
@@ -130,7 +130,8 @@
 
 
 <LoginScreen>
-    md_bg_color: get_color_from_hex("#2B2A29")    
+    #md_bg_color: get_color_from_hex("#2B2A29")  
+    md_bg_color: get_color_from_hex("#382B2A")
 
     MDCard:
         id: box
@@ -138,7 +139,7 @@
         pos_hint: {"center_x": .5, "center_y": .5}
         radius: [12,]
         elevation: 18
-        md_bg_color: get_color_from_hex("#2B2A29")
+        md_bg_color: get_color_from_hex("#F1E9C60F")
 
         ScaleBox:
             id: forgetpass_enabled_box
@@ -188,7 +189,7 @@
 
     MDCard:
         id: box2
-        md_bg_color: get_color_from_hex("#382B2A")
+        md_bg_color: get_color_from_hex("#F1E9C6")# get_color_from_hex("#382B2A")
         size_hint: None, None
         size: box.width / 2, box.height + dp(40)
         radius: [39,]
