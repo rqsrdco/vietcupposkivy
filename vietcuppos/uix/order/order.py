@@ -112,8 +112,15 @@ class OrderScreen(MDScreen):
         drink = self.ids.drink_selectionlist.get_selection()
         foods = self.ids.foods_selectionlist.get_selection()
 
+        print(len(coffee))
+        print(coffee)
+        print(len(drink))
+        print(drink)
+        print(len(foods))
+        print(foods)
+
         # coffee
-        if not bool(coffee) is not True:
+        if coffee:
             for key, value in coffee.items():
                 self.ids.bill_op.add_widget(
                     ItemBill(
@@ -124,7 +131,7 @@ class OrderScreen(MDScreen):
                     )
                 )
         # drink
-        if not bool(drink) is not True:
+        if drink:
             for key, value in drink.items():
                 self.ids.bill_op.add_widget(
                     ItemBill(
@@ -135,7 +142,7 @@ class OrderScreen(MDScreen):
                     )
                 )
         # foods
-        if not bool(foods) is not True:
+        if foods:
             for key, value in foods.items():
                 self.ids.bill_op.add_widget(
                     ItemBill(

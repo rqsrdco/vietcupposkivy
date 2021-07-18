@@ -47,7 +47,7 @@ class ItemBill(MDCard):
     total_price = NumericProperty(0.0)
 
     def __init__(self, **kwargs):
-        super(ItemBill, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self._update(1)
 
     def _on_delete_dispatch(self):
@@ -84,8 +84,18 @@ class ItemBill(MDCard):
 class ListItemBill(MDList):
 
     def __init__(self, **kwargs):
-        super(ListItemBill, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.children = []
+
+    def _add_ItemBill(self, itemBill):
+        print("before : %d" % len(self.children))
+
+        if not any(itemBill.item_name is item.item_name or itemBill.item_name ==
+                   item.item_name for item in self.children):
+            self.add_widget(itemBill)
+            self.parent.parent.update_preview()
+
+        print("after : %d" % len(self.children))
 
     def on_remove_widget(self, obj):
         self.remove_widget(obj)
@@ -98,9 +108,7 @@ class ListItemBill(MDList):
         return self.children
 
     def clear_added(self):
-        if not self.children:
-            return
-        self.children = []
+        self.clear_widgets()
 
 
 class ItemMenu(ThemableBehavior, ButtonBehavior, CircularRippleBehavior, BoxLayout):

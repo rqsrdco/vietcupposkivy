@@ -26,21 +26,9 @@ class BillsOperation(ThemableBehavior, MDGridLayout, EventDispatcher):
 
     def add_widget(self, widget):
         if issubclass(widget.__class__, ItemBill):
-            self._add_or_not(widget)
+            self.ids.list_cur_bill._add_ItemBill(widget)
         else:
             super().add_widget(widget)
-
-    def _add_or_not(self, widget):
-        curr_bill = self.ids.list_cur_bill.get_recent_added()
-        is_Ok = False
-        for item in curr_bill:
-            if item.item_name == widget.item_name:
-                is_Ok = True
-        if is_Ok:
-            return
-        else:
-            self.ids.list_cur_bill.add_widget(widget)
-            self.update_preview()
 
     def update_preview(self):
         list_bl = self.ids.list_cur_bill.get_recent_added()
