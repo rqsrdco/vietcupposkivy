@@ -98,11 +98,11 @@ class MyCarousel(ThemableBehavior, Carousel):
             lambda x: self._set_current_circle(animation=False))
 
 
-class OnboardingItem(BoxLayout):
+class MenuItem(BoxLayout):
     pass
 
 
-class Onboarding(ThemableBehavior, BoxLayout, EventDispatcher):
+class MenuOperation(ThemableBehavior, BoxLayout, EventDispatcher):
 
     circles_size = NumericProperty(dp(20))
     skip_button = BooleanProperty(True)
@@ -115,7 +115,7 @@ class Onboarding(ThemableBehavior, BoxLayout, EventDispatcher):
     circles_color = ListProperty(ColorHex("#F1E9C6"))
 
     def __init__(self, **kwargs):
-        super(Onboarding, self).__init__(**kwargs)
+        super(MenuOperation, self).__init__(**kwargs)
         # self.register_event_type("on_finish")
         self.register_event_type("on_clear")
         self.register_event_type("on_select_all")
@@ -123,7 +123,7 @@ class Onboarding(ThemableBehavior, BoxLayout, EventDispatcher):
         Clock.schedule_once(lambda x: self._update())
 
     def add_widget(self, widget, index=0, canvas=None):
-        if issubclass(widget.__class__, OnboardingItem):
+        if issubclass(widget.__class__, MenuItem):
             self.ids.carousel.add_widget(widget)
         else:
             super().add_widget(widget, index=index, canvas=canvas)

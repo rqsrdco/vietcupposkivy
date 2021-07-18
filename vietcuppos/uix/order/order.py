@@ -42,20 +42,14 @@ class OrderScreen(MDScreen):
         self.get_menu_drink()
         self.get_menu_foods()
 
-        Clock.schedule_interval(self.update_clock, 1)
-
     def on_leave(self, *args):
-        self.ids.boarding.reset()
-        Clock.unschedule(self.update_clock)
+        self.ids.menu_op.reset()
 
-    def update_clock(self, *args):
-        self.ids.time_stamp.text = time.strftime("%c")
+    # def remove_item_bill(self, item):
+    #    self.recent_bill.remove_widget(item)
 
-    def remove_item_bill(self, item):
-        self.recent_bill.remove_widget(item)
-
-    def clear_bills(self):
-        self.recent_bill.clear_widgets()
+    # def clear_bills(self):
+    #    self.recent_bill.clear_widgets()
 
     def get_menu_coffee(self):
         from kivymd.app import MDApp
@@ -121,33 +115,42 @@ class OrderScreen(MDScreen):
         # coffee
         if not bool(coffee) is not True:
             for key, value in coffee.items():
-                self.ids.recent_bill.add_widget(
+                self.ids.bill_op.add_widget(
                     ItemBill(
                         item_name=key,
                         item_amount=1,
                         item_price=float(value),
-                        on_delete=self.remove_item_bill()
+                        # on_delete=self.remove_item_bill()
                     )
                 )
         # drink
         if not bool(drink) is not True:
             for key, value in drink.items():
-                self.ids.recent_bill.add_widget(
+                self.ids.bill_op.add_widget(
                     ItemBill(
                         item_name=key,
                         item_amount=1,
                         item_price=float(value),
-                        on_delete=self.remove_item_bill()
+                        # on_delete=self.remove_item_bill()
                     )
                 )
         # foods
         if not bool(foods) is not True:
             for key, value in foods.items():
-                self.ids.recent_bill.add_widget(
+                self.ids.bill_op.add_widget(
                     ItemBill(
                         item_name=key,
                         item_amount=1,
                         item_price=float(value),
-                        on_delete=self.remove_item_bill()
+                        # on_delete=self.remove_item_bill()
                     )
                 )
+
+    def qrcode_callback(self, *args):
+        toast("qrcode")
+
+    def print_bill_callback(self, *args):
+        toast("print")
+
+    def paying_callback(self, *args):
+        toast("pay")

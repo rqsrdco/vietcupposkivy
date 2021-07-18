@@ -2,9 +2,6 @@ from kivy.factory import Factory
 
 r = Factory.register
 
-r("ItemBill", module="vietcuppos.uix.components")
-r("ItemMenu", module="vietcuppos.uix.components")
-r("ListItemMenu", module="vietcuppos.uix.components")
 r("SweetAlert", module="vietcuppos.uix.sweetalert")
 r("PasswordFieldRec", module="vietcuppos.uix.components")
 r("PasswordFieldRound", module="vietcuppos.uix.components")
@@ -17,5 +14,11 @@ r("Button_Item", module="vietcuppos.uix.components.bottomnav")
 r("BadgeLayout", module="vietcuppos.uix.components.bottomnav")
 r("BadgeItem", module="vietcuppos.uix.components.bottomnav")
 r("BadgeContent", module="vietcuppos.uix.components.bottomnav")
-r("Onboarding", module="vietcuppos.uix.components.onboarding")
-r("OnboardingItem", module="vietcuppos.uix.components.onboarding")
+
+r("ItemBill", module="vietcuppos.uix.components")
+r("ListItemBill", module="vietcuppos.uix.components")
+r("ItemMenu", module="vietcuppos.uix.components")
+r("ListItemMenu", module="vietcuppos.uix.components")
+r("BillsOperation", module="vietcuppos.uix.components.bills")
+r("MenuOperation", module="vietcuppos.uix.components.menus")
+r("MenuItem", module="vietcuppos.uix.components.menus")

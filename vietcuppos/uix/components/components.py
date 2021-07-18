@@ -40,7 +40,7 @@ class Container(IRightBodyTouch, MDBoxLayout):
     adaptive_width = True
 
 
-class ItemBill(MDCard, EventDispatcher):
+class ItemBill(MDCard):
     item_name = StringProperty()
     item_amount = NumericProperty(1)
     item_price = NumericProperty(19789.99)
@@ -48,20 +48,10 @@ class ItemBill(MDCard, EventDispatcher):
 
     def __init__(self, **kwargs):
         super(ItemBill, self).__init__(**kwargs)
-        self.register_event_type("on_delete")
-        Clock.schedule_once(lambda x: self._update())
+        self._update(1)
 
     def _on_delete_dispatch(self):
-        self.dispatch("on_delete")
-
-    def on_delete(self, *args):
-        pass
-
-    def _update(self):
-        self.total_price = (
-            self.item_price * self.item_amount).quantize(Decimal('0.01'))
-
-    def foobar(x): return x*(10**2)
+        self.parent.on_remove_widget(self)
 
     def minus_item_amount(self):
         if self.item_amount > 1:
@@ -71,7 +61,12 @@ class ItemBill(MDCard, EventDispatcher):
         self.item_amount += 1
 
     def on_item_amount(self, obj, value):
-        self.total_price = self.foobar(self.item_price * value)
+        self._update(value)
+        self.parent.amount_change()
+
+    def _update(self, value):
+        self.total_price = round((
+            self.item_price * value), 2)
 
     # def on_event_delete(self, obj):
     #    print(obj)
@@ -87,15 +82,25 @@ class ItemBill(MDCard, EventDispatcher):
 
 
 class ListItemBill(MDList):
-    _added_list = []
+
+    def __init__(self, **kwargs):
+        super(ListItemBill, self).__init__(**kwargs)
+        self.children = []
+
+    def on_remove_widget(self, obj):
+        self.remove_widget(obj)
+        self.parent.parent.update_preview()
+
+    def amount_change(self):
+        self.parent.parent.update_preview()
 
     def get_recent_added(self):
-        return self._added_list
+        return self.children
 
     def clear_added(self):
-        if not self._added_list:
+        if not self.children:
             return
-        self._added_list = []
+        self.children = []
 
 
 class ItemMenu(ThemableBehavior, ButtonBehavior, CircularRippleBehavior, BoxLayout):

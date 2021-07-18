@@ -55,6 +55,8 @@
                 rounded_rectangle: self.x , self.y, self.width, self.height, 12
                 width: 1
         id: scrv_cur_bill
+        ListItemBill:
+            id: list_cur_bill
             # rECENT BILL
     MDGridLayout:
         cols: 2
@@ -81,7 +83,7 @@
             halign: "left"
             pos_hint: {'center_y': .5}
         MDLabel:
-            text: "74000"
+            text: str(root.subtotal)
             color: C("#F1E9C6")
             halign: "right"
             pos_hint: {'center_y': .5}
@@ -91,7 +93,7 @@
             halign: "left"
             pos_hint: {'center_y': .5}
         MDLabel:
-            text: "7400"
+            text: str(root.tax)
             color: C("#F1E9C6")
             halign: "right"
             pos_hint: {'center_y': .5}
@@ -101,7 +103,7 @@
             halign: "left"
             pos_hint: {'center_y': .5}
         MDLabel:
-            text: "81000"
+            text: str(root.total)
             color: C("#F1E9C6")
             halign: "right"
             pos_hint: {'center_y': .5}
@@ -144,7 +146,7 @@
             #badgeitem_color: C("#025F50")
             #badge_bg_color: C("#F1E9C60F")
             badge_disabled: True
-            on_release: root._on_clear_bill_dispatch()
+            on_release: root.clear_current_bill()
 
         Button_Item:
             text: "Printer"
