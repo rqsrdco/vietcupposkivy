@@ -78,34 +78,58 @@
                 rounded_rectangle: self.x , self.y, self.width, self.height, 12
                 width: 1
         MDLabel:
-            text: "Subtotal"
-            color: C("#F1E9C6")
-            halign: "left"
-            pos_hint: {'center_y': .5}
-        MDLabel:
             text: str(root.subtotal)
-            color: C("#F1E9C6")
-            halign: "right"
+            theme_text_color: "Custom"
+            text_color: C("#F1E9C6")
+            halign: "left"
+            font_style: "Body2"
+            font_name: "FS GillSansMTPro VietCup"
+            bold: True
             pos_hint: {'center_y': .5}
         MDLabel:
-            text: "TAX"
-            color: C("#F1E9C6")
-            halign: "left"
+            text: "Subtotal"
+            theme_text_color: "Custom"
+            text_color: C("#F1E9C6")
+            halign: "right"
+            font_style: "Subtitle2"
+            font_name: "VDUFFY VietCup"
+            bold: True
             pos_hint: {'center_y': .5}
         MDLabel:
             text: str(root.tax)
-            color: C("#F1E9C6")
-            halign: "right"
+            theme_text_color: "Custom"
+            text_color: C("#F1E9C6")
+            halign: "left"
+            font_style: "Body2"
+            font_name: "FS GillSansMTPro VietCup"
+            bold: True
             pos_hint: {'center_y': .5}
         MDLabel:
-            text: "Total"
-            color: C("#F1E9C6")
-            halign: "left"
+            text: "TAX"
+            theme_text_color: "Custom"
+            text_color: C("#F1E9C6")
+            halign: "right"
+            font_style: "Subtitle2"
+            font_name: "VDUFFY VietCup"
+            bold: True
             pos_hint: {'center_y': .5}
         MDLabel:
             text: str(root.total)
-            color: C("#F1E9C6")
+            theme_text_color: "Custom"
+            text_color: C("#F1E9C6")
+            halign: "left"
+            font_style: "Body2"
+            font_name: "FS GillSansMTPro VietCup"
+            bold: True
+            pos_hint: {'center_y': .5}
+        MDLabel:
+            text: "Total"
+            theme_text_color: "Custom"
+            text_color: C("#F1E9C6")
             halign: "right"
+            font_style: "Subtitle2"
+            font_name: "VDUFFY VietCup"
+            bold: True
             pos_hint: {'center_y': .5}
     MDGridLayout:
         cols: 4
@@ -121,7 +145,7 @@
                 radius: [(12,12), (12,12), (12,12), (12,12)]
         canvas:
             Color:
-                rgba: C("#F1E9C60F")
+                rgba: C("#2B2A29")
             Line:
                 rounded_rectangle: self.x , self.y, self.width, self.height, 12
                 width: 1
@@ -158,6 +182,17 @@
             #badge_bg_color: C("#F1E9C60F")
             badge_disabled: True
             on_release: root._on_print_bill_dispatch()
+
+        Button_Item:
+            text: "Save Order"
+            icon: "content-save"
+            icon_color: C("#E3BFA3")
+            text_color: C("#F1E9C6")
+            button_bg_color: C("#F1E9C60F")
+            #badgeitem_color: C("#025F50")
+            #badge_bg_color: C("#F1E9C60F")
+            badge_disabled: True
+            on_release: root._on_save_curr_bill()
 
         Button_Item:
             text: "Pay"

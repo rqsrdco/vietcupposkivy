@@ -13,7 +13,7 @@ from kivy.lang import Builder
 from kivymd.uix.textfield import MDTextField
 
 
-Window.size = (700, 500)
+Window.size = (1024, 768)
 Window.minimum_width, Window.minimum_height = Window.size
 
 
@@ -91,8 +91,6 @@ class SignInBox(ScaleBox):
 
     def validate_account(self):
         if self.ids.email_field.text != "" and self.ids.pwds.pwd_field.text != "":
-            self.ids.pwds.pwd_field.error = False
-            self.ids.email_field.error = False
             app = MDApp.get_running_app()
             user = None
             try:
@@ -103,15 +101,14 @@ class SignInBox(ScaleBox):
             except Exception:
                 pass
             if user is None:
-                self.ids.email_field.helper_text = '[color=#FF0000]Invalid Email[/color]'
-                self.ids.email_field.error = True
+                self.ids.email_field.hint_text = '[color=#FF0000]Invalid Email[/color]'
             else:
                 #pwd_chk = hashlib.sha256(pwd_chk.encode()).hexdigest()
+                #self.ids.email_field.hint_text = ""
+                #self.ids.pwds.hint_text = ""
                 if self.ids.pwds.pwd_field.text == user[6]:
                     account_type = user[7]
                     # info.text = '[color=#00FF00]Logged In successfully!!![/color]'
-                    self.ids.pwds.pwd_field.helper_text = ""
-                    self.ids.email_field.helper_text = ""
                     if account_type == 'Administrator':
                         self.canvas.clear()
                         app.root.current = 'admin'
@@ -119,11 +116,9 @@ class SignInBox(ScaleBox):
                         self.canvas.clear()
                         app.app_scrn_mgr.current = 'cashier'
                 else:
-                    self.ids.pwds.pwd_field.helper_text = '[color=#FF0000]Invalid Password[/color]'
-                    self.ids.pwds.pwd_field.error = True
+                    self.ids.pwds.pwd_field.hint_text = '[color=#FF0000]Invalid Password[/color]'
         else:
             if self.ids.email_field.text == "":
-                self.ids.email_field.helper_text = "Email required"
-            if self.ids.pwds.pwd_field.text == "":
-                self.ids.pwds.pwd_field.helper_text = "Password required"
-                self.ids.pwds.pwd_field.error = True
+                self.ids.email_field.hint_text = "Email required"
+            if self.ids.pwds.text == "":
+                self.ids.pwds.pwd_field.hint_text = "Password required"

@@ -9,7 +9,7 @@ from kivymd.uix.card import MDCard
 from kivymd.uix.list import MDList
 from kivymd.app import MDApp
 
-from kivy.properties import ObjectProperty, StringProperty, ColorProperty, NumericProperty, BooleanProperty
+from kivy.properties import ObjectProperty, StringProperty, ColorProperty, NumericProperty, BooleanProperty, DictProperty
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.stacklayout import StackLayout
 from kivy.uix.boxlayout import BoxLayout
@@ -32,6 +32,7 @@ class PasswordFieldRec(MDRelativeLayout):
 
 
 class PasswordFieldRound(MDRelativeLayout):
+    pwd_field = ObjectProperty()
     text = StringProperty()
     hint_text = StringProperty()
 
@@ -88,14 +89,10 @@ class ListItemBill(MDList):
         self.children = []
 
     def _add_ItemBill(self, itemBill):
-        print("before : %d" % len(self.children))
-
         if not any(itemBill.item_name is item.item_name or itemBill.item_name ==
                    item.item_name for item in self.children):
             self.add_widget(itemBill)
             self.parent.parent.update_preview()
-
-        print("after : %d" % len(self.children))
 
     def on_remove_widget(self, obj):
         self.remove_widget(obj)
@@ -124,16 +121,16 @@ class ItemMenu(ThemableBehavior, ButtonBehavior, CircularRippleBehavior, BoxLayo
     def _choose_selection(self, name, price):
 
         selected_dict = self.parent._selected_dict
-
-        if selected_dict.get(name) is None:
+        if len(selected_dict) >= 1:
+            if selected_dict.get(name) is None:
+                selected_dict["%s" % name] = price
+                self._selection_anim()
+            else:
+                selected_dict.pop(name)
+                self._deselection_anim()
+        else:
             selected_dict["%s" % name] = price
             self._selection_anim()
-        else:
-            selected_dict.pop(name)
-            self._deselection_anim()
-
-        if not selected_dict:
-            selected_dict = {}
 
         self.parent._selected_dict = selected_dict
 
@@ -153,10 +150,12 @@ class ItemMenu(ThemableBehavior, ButtonBehavior, CircularRippleBehavior, BoxLayo
 
 
 class ListItemMenu(StackLayout):
-    _selected_dict = {}
+    _selected_dict = DictProperty({})
 
     def get_selection(self):
-        return self._selected_dict
+        if len(self._selected_dict) >= 1:
+            return self._selected_dict
+        return {}
 
     def clear_selection(self):
         if not self.children:

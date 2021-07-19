@@ -25,6 +25,10 @@
         font_style: "H5"
         adaptive_size: True
         pos_hint: {"center_x": .5}
+        theme_text_color: "Custom"
+        text_color: C("#F1E9C6")
+        halign: "center"
+        font_name: "VDUFFY VietCup"
 
     Widget:
         size_hint_y: None
@@ -32,25 +36,31 @@
 
     MDTextField:
         id: get_email_field
+        adaptive_height: True
+        radius: [10,10,10,10]
+        mode: "fill" # ["rectangle", "fill"]
         hint_text: "Email Address ?"
-        current_hint_text_color: [0,1,0,1]
+        current_hint_text_color: C("#E6C67C")
+        font_name_hint_text: "VDUFFY VietCup"
         #icon_left: 'email'
         helper_text: "example@gmail.com"
-        helper_text_mode: "on_focus"
+        helper_text_mode: "on_error"
+        font_name_helper_text: "FS GillSansMTPro VietCup"
         max_text_length: 36
         color_mode: "custom" #["primary", "accent", "custom"]
-        mode: "rectangle" # ["rectangle", "fill"]
-        line_color_normal:  [1,0,0,1]
-        line_color_focus: [0,1,0,1]
+        line_color_normal:  C("#F1E9C60F")
+        line_color_focus: C("#E6C67C")
         line_anim: True
-        error_color: [1,0,0,1]
-        fill_color: [0,0,0,.6]
+        error_color: [239/255, 12/255, 14/255, 1]
+        fill_color: C("#F1E9C60F")
         active_line: True
-        icon_right: "account"
-        icon_right_color: [0,0,1,1]
-        text_color: [0,1,0,1]
+        icon_right: "email"
+        icon_right_color: C("#E6C67C")
+        text_color: C("#F1E9C6")
         font_size: "18sp"
+        #max_height: 68
         focus: True
+        multiline: False
 
     #MDTextField:
     #    id: get_email_field
@@ -69,6 +79,7 @@
 
     MDIconButton:
         id: forgotpass_btn
+        adaptive_height: True
         on_release: app.root.current = 'mdicons_scrn' #root.parent.parent.goto_admin()
         canvas:
             Color:
@@ -95,6 +106,10 @@
         font_style: "H5"
         adaptive_size: True
         pos_hint: {"center_x": .5}
+        theme_text_color: "Custom"
+        text_color: C("#F1E9C6")
+        halign: "center"
+        font_name: "VDUFFY VietCup"
 
     Widget:
         size_hint_y: None
@@ -102,6 +117,8 @@
 
     MDTextFieldRound:
         id: email_field
+        adaptive_height: True
+        markup: True
         icon_left: 'email'
         text: "c"
         focus: True
@@ -110,11 +127,13 @@
         helper_text: "Invalid Email"
         helper_text_mode: "on_error"
         icon_left: 'email'
-        normal_color: app.theme_cls.accent_color
-        color_active: get_color_from_hex("#F1E9C6")
+        normal_color: get_color_from_hex("#F1E9C60F")
+        color_active: get_color_from_hex("#E3BFA3aF")
+        icon_left_color: get_color_from_hex("#382B2A")
+        line_color: get_color_from_hex("#FBD834")
         on_text_validate: pwds.pwd_field.focus = True
 
-    PasswordFieldRec:
+    PasswordFieldRound:
         id: pwds
 
     Widget:
@@ -123,9 +142,13 @@
 
     MDRoundFlatButton:
         id: signin_btn
+        adaptive_height: True
         text: "Sign In"
         pos_hint: {"center_x": .5}
         line_width: 1.2
+        theme_text_color: "Custom"
+        text_color: get_color_from_hex("#E6C67C")
+        line_color: get_color_from_hex("#E6C67C")
         on_press: root.validate_account() #root.parent.parent.goto_cashier()
 
 
@@ -159,9 +182,13 @@
 
             MDRoundFlatButton:
                 id: enter_signin_btn
+                adaptive_height: True
                 text: "Sign In"
                 pos_hint: {"center_x": .5}
                 line_width: 1.2
+                theme_text_color: "Custom"
+                text_color: get_color_from_hex("#E6C67C")
+                line_color: get_color_from_hex("#E6C67C")
                 on_release: root.animation_to_left()
 
         ScaleBox:
@@ -182,14 +209,18 @@
 
             MDRoundFlatButton:
                 id: enter_get_pass_btn
+                adaptive_height: True
                 text: "Password Reset"
                 pos_hint: {"center_x": .5}
                 line_width: 1.2
+                theme_text_color: "Custom"
+                text_color: get_color_from_hex("#E6C67C")
+                line_color: get_color_from_hex("#E6C67C")
                 on_release: root.animation_to_right()
 
     MDCard:
         id: box2
-        md_bg_color: get_color_from_hex("#F1E9C6")# get_color_from_hex("#382B2A")
+        md_bg_color: get_color_from_hex("#382B2A")# get_color_from_hex("#382B2A")
         size_hint: None, None
         size: box.width / 2, box.height + dp(40)
         radius: [39,]

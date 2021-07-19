@@ -7,6 +7,7 @@ from kivy.event import EventDispatcher
 from kivy.clock import Clock
 import time
 from vietcuppos.uix.components import ItemBill
+from kivymd.toast import toast
 
 
 class BillsOperation(ThemableBehavior, MDGridLayout, EventDispatcher):
@@ -64,3 +65,28 @@ class BillsOperation(ThemableBehavior, MDGridLayout, EventDispatcher):
 
     def on_paying(self, *args):
         pass
+
+    def _on_save_curr_bill(self):
+        cur_order = self.ids.list_cur_bill.get_recent_added()
+        if not cur_order:
+            toast("Nothings to Save")
+            return
+        else:
+            import datetime
+            import random
+            from kivymd.app import MDApp
+            app = MDApp.get_running_app()
+            _dt = datetime.datetime.now()
+            for order in cur_order:
+                _code = "cs %s %s %d" % (order.item_name, len(
+                    cur_order), random.randint(1, 999999))
+                cur_bll = (
+                    _code,
+                    order.item_name,
+                    order.item_amount,
+                    order.item_price,
+                    "cashier",
+                    '{}'.format(_dt)
+                )
+                conn = app.local_sqlite.connect_database()
+                app.local_sqlite.insert_into_database("Bills", conn, cur_bll)

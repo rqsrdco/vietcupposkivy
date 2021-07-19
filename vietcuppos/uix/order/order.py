@@ -30,7 +30,7 @@ from vietcuppos.uix.components import ItemBill, ItemMenu
 
 class OrderScreen(MDScreen):
 
-    recent_bill = ObjectProperty()
+    bill_fnc = ObjectProperty()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -44,12 +44,6 @@ class OrderScreen(MDScreen):
 
     def on_leave(self, *args):
         self.ids.menu_op.reset()
-
-    # def remove_item_bill(self, item):
-    #    self.recent_bill.remove_widget(item)
-
-    # def clear_bills(self):
-    #    self.recent_bill.clear_widgets()
 
     def get_menu_coffee(self):
         from kivymd.app import MDApp
@@ -88,16 +82,9 @@ class OrderScreen(MDScreen):
             )
 
     def clear_callback(self, *args):
-        coffee = self.ids.coffee_selectionlist.get_selection()
-        drink = self.ids.drink_selectionlist.get_selection()
-        foods = self.ids.foods_selectionlist.get_selection()
-        if not bool(coffee) is not True:
-            self.ids.coffee_selectionlist.clear_selection()
-        if not bool(drink) is not True:
-            self.ids.drink_selectionlist.clear_selection()
-        if not bool(foods) is not True:
-            self.ids.foods_selectionlist.clear_selection()
-        #toast("clear_callback : %s %s %s" % (coffee, drink, foods))
+        self.ids.coffee_selectionlist.clear_selection()
+        self.ids.drink_selectionlist.clear_selection()
+        self.ids.foods_selectionlist.clear_selection()
 
     def select_all_callback(self):
         # thieu check current slide
@@ -108,48 +95,37 @@ class OrderScreen(MDScreen):
 
     def ok_callback(self):
         # Add Items to Order Bill
-        coffee = self.ids.coffee_selectionlist.get_selection()
-        drink = self.ids.drink_selectionlist.get_selection()
-        foods = self.ids.foods_selectionlist.get_selection()
-
-        print(len(coffee))
-        print(coffee)
-        print(len(drink))
-        print(drink)
-        print(len(foods))
-        print(foods)
-
         # coffee
-        if coffee:
+        coffee = self.ids.coffee_selectionlist.get_selection()
+        if len(coffee) >= 1:
             for key, value in coffee.items():
                 self.ids.bill_op.add_widget(
                     ItemBill(
                         item_name=key,
                         item_amount=1,
                         item_price=float(value),
-                        # on_delete=self.remove_item_bill()
                     )
                 )
         # drink
-        if drink:
+        drink = self.ids.drink_selectionlist.get_selection()
+        if len(drink) >= 1:
             for key, value in drink.items():
                 self.ids.bill_op.add_widget(
                     ItemBill(
                         item_name=key,
                         item_amount=1,
                         item_price=float(value),
-                        # on_delete=self.remove_item_bill()
                     )
                 )
         # foods
-        if foods:
+        foods = self.ids.foods_selectionlist.get_selection()
+        if len(foods) >= 1:
             for key, value in foods.items():
                 self.ids.bill_op.add_widget(
                     ItemBill(
                         item_name=key,
                         item_amount=1,
                         item_price=float(value),
-                        # on_delete=self.remove_item_bill()
                     )
                 )
 
@@ -161,3 +137,6 @@ class OrderScreen(MDScreen):
 
     def paying_callback(self, *args):
         toast("pay")
+
+    def save_curr_bill_to_wait_pay(self):
+        pass
