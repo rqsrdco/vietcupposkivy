@@ -20,6 +20,7 @@ class BillsOperation(ThemableBehavior, MDGridLayout, EventDispatcher):
         self.register_event_type("on_scan_qrcode")
         self.register_event_type("on_print_bill")
         self.register_event_type("on_paying")
+        self.register_event_type("on_save_curr_order")
         Clock.schedule_interval(self.update_clock, 1)
 
     def update_clock(self, *args):
@@ -52,19 +53,33 @@ class BillsOperation(ThemableBehavior, MDGridLayout, EventDispatcher):
         self.dispatch("on_scan_qrcode")
 
     def on_scan_qrcode(self, *args):
-        pass
+        toast(str(self.parent.parent))
 
     def _on_print_bill_dispatch(self):
         self.dispatch("on_print_bill")
 
     def on_print_bill(self, *args):
-        pass
+        toast(str(self.parent.parent))
 
     def _on_pay_dispatch(self):
         self.dispatch("on_paying")
 
     def on_paying(self, *args):
-        pass
+        toast(str(self.parent.parent))
+
+    def check_table_Orders_exist_or_not(self):
+        from kivymd.app import MDApp
+        app = MDApp.get_running_app()
+
+        if 'Orders' in app.local_sqlite.findTables():
+            return
+        else:
+            from vietcuppos.local_database import SQLRawCommand
+            conn = app.local_sqlite.connect_database()
+            app.local_sqlite.create_table(
+                SQLRawCommand.create_table_order,
+                conn
+            )
 
     def _on_save_curr_bill(self):
         cur_order = self.ids.list_cur_bill.get_recent_added()
@@ -74,13 +89,15 @@ class BillsOperation(ThemableBehavior, MDGridLayout, EventDispatcher):
         else:
             import datetime
             import random
+            self.check_table_Orders_exist_or_not()
+            _dt = datetime.datetime.now()
+            _code = "cs %d %d" % (len(
+                    cur_order), random.randint(1, 999999))
             from kivymd.app import MDApp
             app = MDApp.get_running_app()
-            _dt = datetime.datetime.now()
+            # begin save current Order
             for order in cur_order:
-                _code = "cs %s %s %d" % (order.item_name, len(
-                    cur_order), random.randint(1, 999999))
-                cur_bll = (
+                cur_order = (
                     _code,
                     order.item_name,
                     order.item_amount,
@@ -89,4 +106,10 @@ class BillsOperation(ThemableBehavior, MDGridLayout, EventDispatcher):
                     '{}'.format(_dt)
                 )
                 conn = app.local_sqlite.connect_database()
-                app.local_sqlite.insert_into_database("Bills", conn, cur_bll)
+                app.local_sqlite.insert_into_database(
+                    "Orders", conn, cur_order)
+            self.clear_current_bill()
+            self.dispatch("on_save_curr_order")
+
+    def on_save_curr_order(self, *args):
+        pass

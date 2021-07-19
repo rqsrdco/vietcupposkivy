@@ -26,6 +26,7 @@ import time
 from functools import partial
 
 from vietcuppos.uix.components import ItemBill, ItemMenu
+from kivymd.app import MDApp
 
 
 class OrderScreen(MDScreen):
@@ -41,12 +42,12 @@ class OrderScreen(MDScreen):
         self.get_menu_coffee()
         self.get_menu_drink()
         self.get_menu_foods()
+        self.get_orders_not_pay()
 
     def on_leave(self, *args):
         self.ids.menu_op.reset()
 
     def get_menu_coffee(self):
-        from kivymd.app import MDApp
         dbsql = MDApp.get_running_app().local_sqlite
         menu_data = dbsql.extractAllData('Menus', order_by='name')
         self.ids.coffee_selectionlist.clear_widgets()
@@ -55,7 +56,7 @@ class OrderScreen(MDScreen):
                 ItemMenu(
                     first_label="%s" % coffee[2],
                     second_label="%d" % (coffee[3] * 12345.67),
-                    source="vietcuppos/images/logo.png",
+                    source="vietcuppos/images/coffee.png",
                 )
             )
 
@@ -66,7 +67,7 @@ class OrderScreen(MDScreen):
                 ItemMenu(
                     first_label="Drinking %d" % x,
                     second_label="%d" % (x * 12345.67),
-                    source="vietcuppos/images/logo.png",
+                    source="vietcuppos/images/drink.png",
                 )
             )
 
@@ -77,7 +78,7 @@ class OrderScreen(MDScreen):
                 ItemMenu(
                     first_label="Foods %d" % x,
                     second_label="%d" % (x * 12345.67),
-                    source="vietcuppos/images/logo.png",
+                    source="vietcuppos/images/food.png",
                 )
             )
 
@@ -138,5 +139,46 @@ class OrderScreen(MDScreen):
     def paying_callback(self, *args):
         toast("pay")
 
-    def save_curr_bill_to_wait_pay(self):
-        pass
+    def signal_saved_curr_order(self):
+        self.get_orders_not_pay()
+
+    def list_to_dict(self, input_list):
+        output_dict = {}
+        code = input_list[0][1]
+        output_dict["%s" % code] = {}
+        num = 1
+        for row in input_list:
+            dic_r = {}
+            dic_r["name"] = row[2]
+            dic_r["count"] = row[3]
+            dic_r["price"] = row[4]
+            if (row[1] == code or row[1] is code):
+                output_dict["%s" % code]["%d" % num] = dic_r
+                num += 1
+            else:
+                num = 1
+                code = row[1]
+                output_dict["%s" % code] = {}
+                output_dict["%s" % code]["%d" % num] = dic_r
+                num += 1
+        return output_dict
+
+    def get_orders_not_pay(self):
+        dbsql = MDApp.get_running_app().local_sqlite
+        order_wait = dbsql.extractAllData('Orders', order_by='order_code')
+        if not order_wait:
+            return
+        else:
+            rslt_dict = self.list_to_dict(order_wait)
+            self.ids.order_selectionlist.clear_widgets()
+            for key, value in rslt_dict.items():
+                _total_price = 0
+                for k, v in value.items():
+                    _total_price += v["count"] * v["price"]
+                self.ids.order_selectionlist.add_widget(
+                    ItemMenu(
+                        first_label="%s" % key,
+                        second_label="%d" % _total_price,
+                        source="vietcuppos/images/order.png",
+                    )
+                )

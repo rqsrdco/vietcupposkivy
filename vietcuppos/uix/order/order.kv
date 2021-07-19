@@ -23,31 +23,88 @@
                 Rectangle:
                     size: self.size
                     pos: self.pos
-            MenuOperation:
-                id: menu_op
-                on_clear: root.clear_callback(*args)
-                on_select_all: root.select_all_callback()
-                on_ok: root.ok_callback()
-                circles_size: dp(15)
-                bottom_bar_color: C("#F1E9C60F")
+            ScreenManager:
+                id: order_mgr
+                Screen:
+                    id: take_order
+                    name: "take_order"
+                    MenuOperation:
+                        id: menu_op
+                        on_clear: root.clear_callback(*args)
+                        on_select_all: root.select_all_callback()
+                        on_ok: root.ok_callback()
+                        circles_size: dp(15)
+                        bottom_bar_color: C("#F1E9C60F")
 
-                CoffeeItem:
-                    id: coffee_list
-                    ScrollView:
-                        ListItemMenu:
-                            id: coffee_selectionlist
-                
-                DrinkItem:
-                    id: drink_list
-                    ScrollView:
-                        ListItemMenu:
-                            id: drink_selectionlist
+                        CoffeeItem:
+                            id: coffee_list
+                            ScrollView:
+                                bar_width: 0
+                                do_scroll_x: False
+                                do_scroll_y: True
+                                ListItemMenu:
+                                    id: coffee_selectionlist
+                        
+                        DrinkItem:
+                            id: drink_list
+                            ScrollView:
+                                bar_width: 0
+                                do_scroll_x: False
+                                do_scroll_y: True
+                                ListItemMenu:
+                                    id: drink_selectionlist
 
-                FoodsItem:
-                    id: foods_list
-                    ScrollView:
-                        ListItemMenu:
-                            id: foods_selectionlist
+                        FoodsItem:
+                            id: foods_list
+                            ScrollView:
+                                bar_width: 0
+                                do_scroll_x: False
+                                do_scroll_y: True
+                                ListItemMenu:
+                                    id: foods_selectionlist
+                Screen:
+                    id: order_waitto_pay
+                    name: "order_waitto_pay"
+                    MDBoxLayout:
+                        ScrollView:
+                            bar_width: 0
+                            do_scroll_x: False
+                            do_scroll_y: True
+                            ListItemMenu:
+                                id: order_selectionlist
+            MDGridLayout:
+                cols: 2
+                adaptive_height: True
+                padding: (self.width - 172)/2,12,(self.width - 172)/2,12
+                spacing: 12
+                canvas.before:
+                    Color:
+                        rgba: C("#F1E9C60F")
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [(0,0), (0,0), (0,0), (0,0)]
+                Button_Item:
+                    text: "Take Order"
+                    #badge_bg_color: C("#F1E9C60F")
+                    #badgeitem_color: C("#025F50")
+                    badge_disabled: True
+                    icon: "food"
+                    icon_color: C("#E3BFA3")
+                    text_color: C("#F1E9C6")
+                    button_bg_color: C("#F1E9C60F")
+                    on_release: order_mgr.current = 'take_order'
+
+                Button_Item:
+                    text: "Ordered"
+                    icon: "file-table-box-multiple"
+                    icon_color: C("#E3BFA3")
+                    text_color: C("#F1E9C6")
+                    button_bg_color: C("#F1E9C60F")
+                    #badgeitem_color: C("#025F50")
+                    #badge_bg_color: C("#F1E9C60F")
+                    badge_disabled: True
+                    on_release: order_mgr.current = 'order_waitto_pay'
         # BILLS
         MDBoxLayout:
             orientation: 'vertical'
@@ -58,3 +115,4 @@
                 on_scan_qrcode: root.qrcode_callback()
                 on_print_bill: root.print_bill_callback()
                 on_paying: root: root.paying_callback()
+                on_save_curr_order: root.signal_saved_curr_order()

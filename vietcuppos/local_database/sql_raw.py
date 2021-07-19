@@ -56,3 +56,14 @@ class SQLRawCommand:
             datetime_sell datetime
             );
     """
+    create_table_order = """
+        CREATE TABLE IF NOT EXISTS Orders (
+            id integer PRIMARY KEY,
+            order_code text,
+            order_item text,
+            order_quantity integer,
+            item_price real,
+            cashier text,
+            datetime_order datetime
+            );
+    """

@@ -197,8 +197,8 @@ class DatabaseSQLite:
             except:
                 return False
 
-    def findTables(self, db_file):
-        conn = self.connect_database(db_file)
+    def findTables(self):
+        conn = self.connect_database()
         if conn is not None:
             cur = conn.cursor()
             cur.execute("SELECT name FROM sqlite_master WHERE type='table';")
