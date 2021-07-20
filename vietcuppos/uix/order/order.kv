@@ -70,8 +70,9 @@
                             bar_width: 0
                             do_scroll_x: False
                             do_scroll_y: True
-                            ListItemMenu:
+                            ListOrderMenu:
                                 id: order_selectionlist
+                                on_order_pressed_toPay: root.show_order_to_pay(*args)
             MDGridLayout:
                 cols: 2
                 adaptive_height: True

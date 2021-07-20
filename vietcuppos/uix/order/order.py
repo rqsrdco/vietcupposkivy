@@ -24,9 +24,43 @@ from kivy.metrics import dp
 
 import time
 from functools import partial
-
-from vietcuppos.uix.components import ItemBill, ItemMenu
+from kivy.event import EventDispatcher
+from vietcuppos.uix.components import ItemBill, ItemMenu, ListItemMenu
 from kivymd.app import MDApp
+
+
+class OrderItem(ItemMenu):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.bind(on_press=self._curr_choosen)
+
+    def _curr_choosen(self, event):
+        self.parent._curr_order_to_pay = self.first_label
+        self._selection_anim()
+
+
+class ListOrderMenu(ListItemMenu, EventDispatcher):
+    _curr_order_to_pay = StringProperty("")
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.register_event_type("on_order_pressed_toPay")
+
+    def on__curr_order_to_pay(self, obj, value):
+        self.clear_icon_check()
+        self.dispatch("on_order_pressed_toPay")
+
+    def clear_icon_check(self):
+        if not self.children:
+            return
+        for child in self.children:
+            if child.first_label != self._curr_order_to_pay or child.first_label is not self._curr_order_to_pay:
+                child._deselection_anim()
+            else:
+                child._selection_anim()
+
+    def on_order_pressed_toPay(self, *args):
+        pass
 
 
 class OrderScreen(MDScreen):
@@ -176,9 +210,29 @@ class OrderScreen(MDScreen):
                 for k, v in value.items():
                     _total_price += v["count"] * v["price"]
                 self.ids.order_selectionlist.add_widget(
-                    ItemMenu(
+                    OrderItem(
                         first_label="%s" % key,
                         second_label="%d" % _total_price,
                         source="vietcuppos/images/order.png",
                     )
                 )
+
+    def show_order_to_pay(self, *args):
+        # print(self.ids.order_selectionlist._curr_order_to_pay)
+        db = MDApp.get_running_app().local_sqlite
+        conn = db.connect_database()
+        #_condition = "order_code=%s" % args[0]._curr_order_to_pay
+        _order_to_pay = db.search_from_database(
+            "Orders", conn, "order_code", args[0]._curr_order_to_pay)
+        if len(_order_to_pay) >= 1:
+            self.ids.bill_op.clear_current_bill()
+            for order in _order_to_pay:
+                self.ids.bill_op.add_widget(
+                    ItemBill(
+                        item_name=order[2],
+                        item_amount=order[3],
+                        item_price=order[4],
+                    )
+                )
+        else:
+            toast("Order Empty !")

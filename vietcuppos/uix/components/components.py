@@ -43,13 +43,13 @@ class Container(IRightBodyTouch, MDBoxLayout):
 
 class ItemBill(MDCard):
     item_name = StringProperty()
-    item_amount = NumericProperty(1)
+    item_amount = NumericProperty()
     item_price = NumericProperty(19789.99)
     total_price = NumericProperty(0.0)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self._update(1)
+        self._update()
 
     def _on_delete_dispatch(self):
         self.parent.on_remove_widget(self)
@@ -57,17 +57,22 @@ class ItemBill(MDCard):
     def minus_item_amount(self):
         if self.item_amount > 1:
             self.item_amount -= 1
+            self._update()
+            self.parent.amount_change()
 
     def plus_item_amount(self):
         self.item_amount += 1
-
-    def on_item_amount(self, obj, value):
-        self._update(value)
+        self._update()
         self.parent.amount_change()
 
-    def _update(self, value):
+    # def on_item_amount(self, obj, value):
+    #    self._update(value)
+    #    print("self.parent %s" % self.parent)
+    #    self.parent.amount_change()
+
+    def _update(self):
         self.total_price = round((
-            self.item_price * value), 2)
+            self.item_price * self.item_amount), 2)
 
     # def on_event_delete(self, obj):
     #    print(obj)
