@@ -115,5 +115,4 @@
                 id: bill_op
                 on_scan_qrcode: root.qrcode_callback()
                 on_print_bill: root.print_bill_callback()
-                on_paying: root: root.paying_callback()
-                on_save_curr_order: root.signal_saved_curr_order()
+                on_save_bill_order: root.get_orders_not_pay()

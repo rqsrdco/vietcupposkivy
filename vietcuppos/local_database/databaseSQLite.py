@@ -85,12 +85,11 @@ class DatabaseSQLite:
                 conn.commit()
                 return True
             except Exception as e:
-                pass
-                # print("Error in updating data: {}".format(e))
+                print("Error in updating data: {}".format(e))
         return None
 
     # Delete from Database
-    def delete_from_database(self, tableName, conn, condition):
+    def delete_from_database(self, tableName, conn, condition, value):
         if conn is not None:
             try:
                 cur = conn.cursor()
@@ -98,26 +97,26 @@ class DatabaseSQLite:
                 count = len(
                     cur.execute(
                         """
-						SELECT * FROM {} WHERE {}
+						SELECT * FROM {} WHERE {} = ?
 						""".format(
                             tableName, condition
-                        )
+                        ), (value,),
                     ).fetchall()
                 )
                 if not count:
                     return False
                 cur.execute(
                     """
-						DELETE FROM {} WHERE {}
+						DELETE FROM {} WHERE {} = ?
 						""".format(
                         tableName, condition
-                    )
+                    ), (value,),
                 )
                 conn.commit()
+                print("Deleted")
                 return True
             except Error as e:
-                pass
-                # print("Error in deleting data: {}".format(e))
+                print("Error in deleting data: {}".format(e))
         return False
 
     # Search in the database

@@ -172,9 +172,30 @@ class OrderScreen(MDScreen):
 
     def paying_callback(self, *args):
         toast("pay")
+        # check:
+        # 1 : instant payment
+        # 2 : pay later
 
-    def signal_saved_curr_order(self):
-        self.get_orders_not_pay()
+    def get_orders_not_pay(self):
+        dbsql = MDApp.get_running_app().local_sqlite
+        order_wait = dbsql.extractAllData('Orders', order_by='order_code')
+        if not order_wait:
+            toast("Orders sold out !")
+            return
+        else:
+            rslt_dict = self.list_to_dict(order_wait)
+            self.ids.order_selectionlist.clear_widgets()
+            for key, value in rslt_dict.items():
+                _total_price = 0
+                for k, v in value.items():
+                    _total_price += v["count"] * v["price"]
+                self.ids.order_selectionlist.add_widget(
+                    OrderItem(
+                        first_label="%s" % key,
+                        second_label="%d" % _total_price,
+                        source="vietcuppos/images/order.png",
+                    )
+                )
 
     def list_to_dict(self, input_list):
         output_dict = {}
@@ -196,26 +217,7 @@ class OrderScreen(MDScreen):
                 output_dict["%s" % code]["%d" % num] = dic_r
                 num += 1
         return output_dict
-
-    def get_orders_not_pay(self):
-        dbsql = MDApp.get_running_app().local_sqlite
-        order_wait = dbsql.extractAllData('Orders', order_by='order_code')
-        if not order_wait:
-            return
-        else:
-            rslt_dict = self.list_to_dict(order_wait)
-            self.ids.order_selectionlist.clear_widgets()
-            for key, value in rslt_dict.items():
-                _total_price = 0
-                for k, v in value.items():
-                    _total_price += v["count"] * v["price"]
-                self.ids.order_selectionlist.add_widget(
-                    OrderItem(
-                        first_label="%s" % key,
-                        second_label="%d" % _total_price,
-                        source="vietcuppos/images/order.png",
-                    )
-                )
+    # Load Order from Orders table to Paying
 
     def show_order_to_pay(self, *args):
         # print(self.ids.order_selectionlist._curr_order_to_pay)
@@ -234,5 +236,6 @@ class OrderScreen(MDScreen):
                         item_price=order[4],
                     )
                 )
+            self.ids.bill_op.curr_bill_code = args[0]._curr_order_to_pay
         else:
             toast("Order Empty !")
