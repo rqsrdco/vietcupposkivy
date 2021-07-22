@@ -45,7 +45,7 @@ class MainApp(POSApp):
         self.app_scrn_mgr.add_widget(CashierWindow())
         self.app_scrn_mgr.add_widget(AdminWindow())
         self.app_scrn_mgr.add_widget(PreviousMDIcons())
-        Window.clearcolor = ColorHex("#382B2A")
+        Window.clearcolor = ColorHex("#382B2A00")
         return self.app_scrn_mgr
 
     def on_start(self):

@@ -7,7 +7,11 @@ from kivymd.theming import ThemableBehavior
 from kivymd.uix.screen import MDScreen
 
 from vietcuppos.uix.order import OrderScreen
-#from vietcuppos.uix.intros import Intros
+from vietcuppos.uix.music import MusicScreen
+
+from kivy.core.window import Window
+
+Window.size = (1024, 768)
 
 
 class CashierLeftScreenManager(ScreenManager):
@@ -28,7 +32,7 @@ class CashierWindow(ThemableBehavior, MDScreen):
         self.name = 'cashier'
         self.left_cashier_scrn_mgr = CashierLeftScreenManager()
         self.left_cashier_scrn_mgr.add_widget(OrderScreen())
-        # self.left_cashier_scrn_mgr.add_widget(Intros())
+        self.left_cashier_scrn_mgr.add_widget(MusicScreen())
         self.ids.left_navigation_contents.add_widget(
             self.left_cashier_scrn_mgr)
 
